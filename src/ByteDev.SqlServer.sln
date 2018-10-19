@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{865051DF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.SqlServer.IntTests", "ByteDev.SqlServer.IntTests\ByteDev.SqlServer.IntTests.csproj", "{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.SqlServer.UnitTests", "ByteDev.SqlServer.UnitTests\ByteDev.SqlServer.UnitTests.csproj", "{80FF7434-0208-4548-A8F9-DE2185916E45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FF7434-0208-4548-A8F9-DE2185916E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FF7434-0208-4548-A8F9-DE2185916E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FF7434-0208-4548-A8F9-DE2185916E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FF7434-0208-4548-A8F9-DE2185916E45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4} = {865051DF-CE16-465C-838C-AF11483A1D08}
+		{80FF7434-0208-4548-A8F9-DE2185916E45} = {865051DF-CE16-465C-838C-AF11483A1D08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27E9B582-63A6-43B4-883A-BBF8C435B647}
