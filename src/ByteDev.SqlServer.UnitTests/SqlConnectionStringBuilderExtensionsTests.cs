@@ -21,5 +21,28 @@ namespace ByteDev.SqlServer.UnitTests
                 Assert.That(sut.InitialCatalog, Is.EqualTo("master"));
             }
         }
+
+        [TestFixture]
+        public class IsDataSourceLocal : SqlConnectionStringBuilderExtensionsTests
+        {
+            [TestCase("", false)]
+            [TestCase("SomeServer", false)]
+            [TestCase(".", true)]
+            [TestCase("(localdb)\\MSSQLLocalDB", true)]
+            [TestCase("(localdb)\\mssqllocaldb", true)]
+            [TestCase("localhost", true)]
+            [TestCase("LOCALHOST", true)]
+            public void WhenDataSourceSet_ThenReturnExpected(string dataSource, bool expected)
+            {
+                var sut = new SqlConnectionStringBuilder
+                {
+                    DataSource = dataSource
+                };
+
+                var result = sut.IsDataSourceLocal();
+
+                Assert.That(result, Is.EqualTo(expected));
+            }
+        }
     }
 }
