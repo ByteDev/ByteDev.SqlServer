@@ -136,6 +136,14 @@ namespace ByteDev.SqlServer.IntTests
 
                 MsSqlServer.DropDatabase(connString);
             }
+
+            [Test]
+            public void WhenDacpacDoesNotExist_ThenThrowException()
+            {
+                var connString = GetConnectionString(GetDbName());
+
+                Assert.Throws<InvalidOperationException>(() => MsSqlServer.DeployDacpac(connString, @".\DoesNotExist.dacpac"));
+            }
         }
 
         private static string GetDbName()
