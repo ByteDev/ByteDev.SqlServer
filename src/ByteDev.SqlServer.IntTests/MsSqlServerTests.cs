@@ -15,7 +15,7 @@ namespace ByteDev.SqlServer.IntTests
             {
                 const string connString = "Data Source=.;Integrated Security=true;";
 
-                var result = MsSqlServer.Exists(connString);
+                var result = Act(connString);
 
                 Assert.That(result, Is.True);
             }
@@ -25,7 +25,7 @@ namespace ByteDev.SqlServer.IntTests
             {
                 const string connString = "Data Source=ServerNotExist;Integrated Security=true;";
 
-                var result = MsSqlServer.Exists(connString);
+                var result = Act(connString);
 
                 Assert.That(result, Is.False);
             }
@@ -37,7 +37,7 @@ namespace ByteDev.SqlServer.IntTests
 
                 MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
 
-                var result = MsSqlServer.Exists(connString);
+                var result = Act(connString);
 
                 Assert.That(result, Is.True);
 
@@ -47,11 +47,16 @@ namespace ByteDev.SqlServer.IntTests
             [Test]
             public void WhenDbDoesNotExist_ThenReturnFalse()
             {
-                const string connString = "Data Source=.;Integrated Security=true;Initial Catalog=DbNotExist";
+                var connString = GetConnectionString("DbNotExist");
 
-                var result = MsSqlServer.Exists(connString);
+                var result = Act(connString);
 
                 Assert.That(result, Is.False);
+            }
+
+            private static bool Act(string connString)
+            {
+                return MsSqlServer.Exists(connString);
             }
         }
 
@@ -65,9 +70,22 @@ namespace ByteDev.SqlServer.IntTests
 
                 MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
 
-                MsSqlServer.ExecuteQueryStoreOff(connString);
+                Act(connString);
 
                 MsSqlServer.DropDatabase(connString);
+            }
+
+            [Test]
+            public void WhenDbDoesNotExist_ThenThrowException()
+            {
+                var connString = GetConnectionString("DbNotExist");
+
+                Assert.Throws<SqlException>(() => Act(connString));
+            }
+
+            private static void Act(string connString)
+            {
+                MsSqlServer.ExecuteQueryStoreOff(connString);
             }
         }
 
@@ -127,7 +145,14 @@ namespace ByteDev.SqlServer.IntTests
 
         private static string GetConnectionString(string databaseName)
         {
-            return $"Data Source=.;Integrated Security=true;Initial Catalog={databaseName}";
+            var builder = new SqlConnectionStringBuilder
+            {
+                DataSource = ".",
+                InitialCatalog = databaseName,
+                IntegratedSecurity = true
+            };
+
+            return builder.ConnectionString;
         }
     }
 }
