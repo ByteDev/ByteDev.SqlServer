@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace ByteDev.SqlServer
 {
@@ -62,6 +64,30 @@ namespace ByteDev.SqlServer
                     command.CommandType = CommandType.Text;
                     return command.ExecuteNonQuery();
                 }
+            }
+        }
+
+        public static void DeployDacpac(string connectionString, string dacpacPath)
+        {
+            var sqlPackageExe = new SqlPackageExe(connectionString, dacpacPath);
+
+            var process = sqlPackageExe.CreatePublishProcess();
+
+            process.Start();
+
+            CheckOutput(process);
+
+            process.WaitForExit();
+        }
+
+        private static void CheckOutput(Process process)
+        {
+            string result = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new InvalidOperationException($"Error while deploying dacpac. Error: '{error}'. Result: '{result}'.");
             }
         }
     }

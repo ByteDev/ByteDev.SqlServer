@@ -14,4 +14,13 @@
     <ProjectReference Include="..\ByteDev.SqlServer\ByteDev.SqlServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SqlServerTest\Create-Customer-Table.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="SqlServerTest\SqlServerTest.dacpac">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

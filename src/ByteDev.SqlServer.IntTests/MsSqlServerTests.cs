@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using NUnit.Framework;
 
 namespace ByteDev.SqlServer.IntTests
@@ -32,11 +33,15 @@ namespace ByteDev.SqlServer.IntTests
             [Test]
             public void WhenDbExists_ThenReturnTrue()
             {
-                const string connString = "Data Source=.;Integrated Security=true;Initial Catalog=SqlServerTest";
+                var connString = GetConnectionString(GetDbName());
+
+                MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
 
                 var result = MsSqlServer.Exists(connString);
 
                 Assert.That(result, Is.True);
+
+                MsSqlServer.DropDatabase(connString);
             }
 
             [Test]
@@ -54,13 +59,15 @@ namespace ByteDev.SqlServer.IntTests
         public class ExecuteQueryStoreOff : MsSqlServerTests
         {
             [Test]
-            public void WhenServerExists_ThenSetQueryStoreOff()
+            public void WhenDbExists_ThenSetQueryStoreOff()
             {
-                // TODO: create DB
+                var connString = GetConnectionString(GetDbName());
 
-                const string connString = "Data Source=.;Integrated Security=true;Initial Catalog=SqlServerTest";
+                MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
 
                 MsSqlServer.ExecuteQueryStoreOff(connString);
+
+                MsSqlServer.DropDatabase(connString);
             }
         }
 
@@ -70,11 +77,11 @@ namespace ByteDev.SqlServer.IntTests
             [Test]
             public void WhenDbExists_ThenDropDb()
             {
-                // TODO: create DB
+                var connString = GetConnectionString(GetDbName());
 
-                const string connString = "Data Source=.;Integrated Security=true;Initial Catalog=SqlServerTest";
+                MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
 
-                MsSqlServer.DropDatabase(connString);
+                Act(connString);
 
                 var exists = MsSqlServer.Exists(connString);
 
@@ -84,10 +91,43 @@ namespace ByteDev.SqlServer.IntTests
             [Test]
             public void WhenDbDoesNotExist_ThenThrowException()
             {
-                const string connString = "Data Source=.;Integrated Security=true;Initial Catalog=DbNotExist";
+                var connString = GetConnectionString("DbNotExist");
 
-                Assert.Throws<SqlException>(() => MsSqlServer.DropDatabase(connString));
+                Assert.Throws<SqlException>(() => Act(connString));
             }
+
+            private static void Act(string connString)
+            {
+                MsSqlServer.DropDatabase(connString);
+            }
+        }
+
+        [TestFixture]
+        public class DeployDacpac : MsSqlServerTests
+        {
+            [Test]
+            public void WhenDbDoesNotExist_ThenCreateDb()
+            {
+                var connString = GetConnectionString(GetDbName());
+
+                MsSqlServer.DeployDacpac(connString, TestFiles.Dacpac);
+
+                var exists = MsSqlServer.Exists(connString);
+
+                Assert.That(exists, Is.True);
+
+                MsSqlServer.DropDatabase(connString);
+            }
+        }
+
+        private static string GetDbName()
+        {
+            return "SqlServerTest-" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        }
+
+        private static string GetConnectionString(string databaseName)
+        {
+            return $"Data Source=.;Integrated Security=true;Initial Catalog={databaseName}";
         }
     }
 }
