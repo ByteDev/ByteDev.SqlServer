@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.SqlServer", "ByteDev.SqlServer\ByteDev.SqlServer.csproj", "{3C653EAF-3BC8-44BB-B93C-CE40099A3EC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByteDev.SqlServer", "ByteDev.SqlServer\ByteDev.SqlServer.csproj", "{3C653EAF-3BC8-44BB-B93C-CE40099A3EC9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{865051DF-CE16-465C-838C-AF11483A1D08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.SqlServer.IntTests", "ByteDev.SqlServer.IntTests\ByteDev.SqlServer.IntTests.csproj", "{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByteDev.SqlServer.IntTests", "ByteDev.SqlServer.IntTests\ByteDev.SqlServer.IntTests.csproj", "{2D8A2C1B-7C4B-41C2-91E6-80E8441460C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ByteDev.SqlServer.UnitTests", "ByteDev.SqlServer.UnitTests\ByteDev.SqlServer.UnitTests.csproj", "{80FF7434-0208-4548-A8F9-DE2185916E45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ByteDev.SqlServer.UnitTests", "ByteDev.SqlServer.UnitTests\ByteDev.SqlServer.UnitTests.csproj", "{80FF7434-0208-4548-A8F9-DE2185916E45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{69A86DA6-8EEB-499F-BB19-5ACEFD978762}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
